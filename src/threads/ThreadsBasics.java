@@ -36,12 +36,21 @@ public class ThreadsBasics {
 // Not recommend as we cannot extend any other class like Serializable or Cloneable.
 class EvenNumbers extends Thread {
 
-    // starting point of thread
+    /**
+     * starting point of thread
+     * Thread.sleep has throws InterruptedException in its signature
+     * ut run method does has this, so we have to surround sleep method inside try catch
+     */
     @Override
     public void run() {
-        for (int i=0; i<=10; i=i+2) {
-            System.out.print(i);
-            System.out.print(" ");
+        try {
+            for (int i = 0; i <= 10; i = i + 2) {
+                System.out.print(i);
+                System.out.print(" ");
+                Thread.sleep(1000); // Blocked state
+            }
+        } catch (InterruptedException _) {
+
         }
     } // thread state - DEAD
 }
