@@ -24,6 +24,9 @@ import java.util.Random;
   notify() - will notify next immediate thread that is waiting for the object(lock-key) to resume execution.
   notifyAll()  -  will notify all thread that are waiting for the object(lock-key) to resume execution.
 
+
+  TODO: what is volatile ???
+
  */
 public class ProducerConsumerProblem {
 
