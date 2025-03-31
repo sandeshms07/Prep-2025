@@ -18,6 +18,12 @@ import java.util.Random;
   Hence, among all thread we created, at any given point of time, only one thread will be inside
   the synchronised block
 
+  Use Wait and notify only inside the synchronised block and only from the lock-key object
+
+  wait() - Thread that execute the wait method will move to blocked state and wait for the object(lock-key) to notify.
+  notify() - will notify next immediate thread that is waiting for the object(lock-key) to resume execution.
+  notifyAll()  -  will notify all thread that are waiting for the object(lock-key) to resume execution.
+
  */
 public class ProducerConsumerProblem {
 
@@ -49,8 +55,16 @@ class Consumer implements Runnable {
                 if (!ProducerConsumerProblem.bucket.isEmpty()) {
                     int n = ProducerConsumerProblem.bucket.getFirst();
                     ProducerConsumerProblem.bucket.removeFirst();
+                    ProducerConsumerProblem.bucket.notifyAll(); // Signals all threads that are waiting for the
+                                                                // object to continue execution
                     System.out.println(Thread.currentThread().getName() + " removed " + n +
                             " " + "from the bucket");
+                } else {
+                    try {
+                        ProducerConsumerProblem.bucket.wait(); // Current thread waits for the object to notify
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }
@@ -66,8 +80,16 @@ class Producer implements Runnable {
                 if (ProducerConsumerProblem.bucket.size() < 10) {
                     int n = r.nextInt();
                     ProducerConsumerProblem.bucket.add(n);
+                    ProducerConsumerProblem.bucket.notifyAll(); // Signals all threads that are waiting for the
+                                                                // object to continue execution
                     System.out.println(Thread.currentThread().getName() + " added " + n +
                             " " + "to the bucket");
+                } else {
+                    try {
+                        ProducerConsumerProblem.bucket.wait(); // Current thread waits for the object to notify
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }

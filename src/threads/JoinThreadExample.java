@@ -1,8 +1,12 @@
 package threads;
 
 /**
- * problem: Get data from 2 domain API parallel and process them once both
- * APIs are returned
+  problem: Get data from 2 domain API parallel and process them once both
+  APIs are returned
+
+  Thread which executes join will wait hte thread to execute before moving foreword
+  Here main thread will wait for both thread to complete before processing
+  Join is one way to achieve synchronization
  */
 public class JoinThreadExample {
     public static void main(String[] args) {
@@ -16,9 +20,7 @@ public class JoinThreadExample {
         api1Thread.start();
         api2Thread.start();
 
-        // Thread which executes join will wait hte thread to execute before moving foreword
-        // here main thread will wait for both thread to complete before processing
-        // Join is one way to achieve synchronization
+
         try {
             api1Thread.join();
             api2Thread.join();
