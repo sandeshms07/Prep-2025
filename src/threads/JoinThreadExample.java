@@ -18,6 +18,7 @@ public class JoinThreadExample {
 
         // Thread which executes join will wait hte thread to execute before moving foreword
         // here main thread will wait for both thread to complete before processing
+        // Join is one way to achieve synchronization
         try {
             api1Thread.join();
             api2Thread.join();
