@@ -28,7 +28,7 @@ public class ThreadsBasics {
     public static void main(String[] args) {
         EvenNumbers t1 = new EvenNumbers(); // thread state - new
         t1.start(); // thread starts after this is executed - thread state - runnable
-        System.out.println("END of main thread");
+        System.out.println("END of main thread " + "  -> " + Thread.currentThread().getName());
     }
 }
 
@@ -45,8 +45,7 @@ class EvenNumbers extends Thread {
     public void run() {
         try {
             for (int i = 0; i <= 10; i = i + 2) {
-                System.out.print(i);
-                System.out.print(" ");
+                System.out.println(i + " ->  " + Thread.currentThread().getName());
                 Thread.sleep(1000); // Blocked state
             }
         } catch (InterruptedException _) {
